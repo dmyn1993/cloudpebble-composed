@@ -11,9 +11,10 @@ Getting Started
    or otherwise get docker and docker-compose into a working state (Linux).
 2. `git clone https://github.com/andrei-markeev/cloudpebble-composed.git && cd cloudpebble-composed`
 3. `./dev_setup.sh` (this will take a while)
-4. `docker compose up`
-5. Register a local account at http://your_ip_address/accounts/register/
-6. Login with local account at http://your_ip_address/accounts/login/ (you have to login when the docker restarts)
+4. edit `/etc/hosts`, add `127.0.0.1 host.docker.internal`
+5. `docker compose up`
+6. Register a local account at http://your_ip_address/accounts/register/
+7. Login with local account at http://your_ip_address/accounts/login/ (you have to login when the docker restarts)
 
 At the end of this, you will have seven Docker containers running. The CloudPebble-specific ones
 should pick up most changes without being rebuilt, although in some cases you may have to stop and
