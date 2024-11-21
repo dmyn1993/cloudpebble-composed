@@ -1,7 +1,7 @@
-FROM python:2.7.11
+FROM python:2.7
 MAINTAINER Katharine Berry <katharine@pebble.com>
 
-ENV NPM_CONFIG_LOGLEVEL=info NODE_VERSION=10.15.3 DJANGO_VERSION=1.6 NODEJS_CHECK_SIGNATURES=no
+ENV NPM_CONFIG_LOGLEVEL=info NODE_VERSION=16.20.2 DJANGO_VERSION=1.6 NODEJS_CHECK_SIGNATURES=no
 
 #    C4F0DFFF4E8C1A8236409D08E73BC641CC11F4C8 \
 # Node stuff.
@@ -16,12 +16,9 @@ RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-
   && tar -xzf "node-v$NODE_VERSION-linux-x64.tar.gz" -C /usr/local --strip-components=1 \
   && rm "node-v$NODE_VERSION-linux-x64.tar.gz" SHASUMS256.txt.asc
 
-RUN npm install -g npm jshint
+RUN npm install -g jshint@2.13.6
 
 # Django stuff
-
-# Fix broken sources.list (jessie repositories have been archived)
-RUN printf "deb http://archive.debian.org/debian/ jessie main\ndeb-src http://archive.debian.org/debian/ jessie main\ndeb http://security.debian.org jessie/updates main\ndeb-src http://security.debian.org jessie/updates main" > /etc/apt/sources.list
 
 RUN apt-get update && apt-get install -y \
     gettext \
@@ -33,7 +30,7 @@ RUN pip install psycopg2 django=="$DJANGO_VERSION"
 EXPOSE 8000
 
 # CloudPebble stuff
-RUN npm install -g bower && echo '{"allow_root": true}' > ~/.bowerrc
+RUN npm install -g bower@1.8.14 && echo '{"allow_root": true}' > ~/.bowerrc
 
 # Grab the toolchain
 RUN curl -o /tmp/arm-cs-tools.tar https://cloudpebble-vagrant.s3.amazonaws.com/arm-cs-tools-stripped.tar && \
