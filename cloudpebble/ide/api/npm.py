@@ -29,8 +29,19 @@ def npm_search(request):
         query = request.GET['q']
     except KeyError:
         return {'packages': []}
-    search = requests.get('http://node-modules.com/search.json', {'q': query}).json()
-    data = {'packages': [filter_dict(package, PACKAGE_SPEC) for package in search]}
+    search = requests.get('https://registry.npmjs.com/-/v1/search', {'text': query, 'size': 20}).json()
+
+    data = {'packages': []}
+
+    for p in search['objects']:
+        data['packages'].append({
+            'name': p['package']['name'],
+            'version': p['package']['version'],
+            'description': p['package']['description'] if 'description' in p['package'] else '',
+            'keywords': p['package']['keywords'] if 'keywords' in p['package'] else [],
+            'author': p['package']['author']['name'] if 'author' in p['package'] else ''
+        })
+
     send_td_event('cloudpebble_package_search', data={
         'data': {
             'query': query
