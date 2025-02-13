@@ -9,7 +9,7 @@ Getting Started
 
 1. Install [Docker Desktop](https://www.docker.com/products/docker-desktop/) (Mac, Windows),
    or otherwise get docker and docker-compose into a working state (Linux).
-2. `git clone https://github.com/andrei-markeev/cloudpebble-composed.git && cd cloudpebble-composed`
+2. `git clone https://github.com/dmyn1993/cloudpebble-composed.git && cd cloudpebble-composed`
 3. `./dev_setup.sh` (this will take a while)
 4. edit `/etc/hosts`, add `127.0.0.1 host.docker.internal`
 5. `docker compose up`
